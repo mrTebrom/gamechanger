@@ -1,13 +1,12 @@
-// app/page.tsx
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
-
-import AuthForm from '@/app/components/auth/loginForm';
-import '@/styles/login.scss';
 import { Stack } from '@mui/material';
 
-export default function HomePage() {
+import RegisterForm from '../components/auth/regiterForm';
+import '@/styles/login.scss';
+
+export default function RegisterPage() {
     return (
         <div className='page'>
             <main>
@@ -16,14 +15,14 @@ export default function HomePage() {
                     spacing={2}
                     sx={{ minHeight: '100%', alignItems: 'stretch' }}
                 >
-                    {/* 8/12 — форма */}
+                    {/* 7/12 — форма */}
                     <Grid size={{ md: 7, sm: 12 }}>
                         <Stack
                             justifyContent='center'
                             alignContent='center'
                             className='h-100'
                         >
-                            <AuthForm />
+                            <RegisterForm />
                         </Stack>
                     </Grid>
 
@@ -40,7 +39,7 @@ export default function HomePage() {
                         >
                             <Image
                                 src='/auth-illustration.png'
-                                alt='Иллюстрация авторизации'
+                                alt='Иллюстрация регистрации'
                                 fill
                                 style={{ objectFit: 'cover' }}
                                 priority
