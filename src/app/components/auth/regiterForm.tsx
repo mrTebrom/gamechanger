@@ -40,7 +40,7 @@ export default function RegisterForm() {
         validatePassword(form.password) &&
         // Повтор пароля совпадает
         form.password === form.confirmPassword;
-
+    console.log(isValid, form);
     return (
         <Stack
             className='register-form form'
