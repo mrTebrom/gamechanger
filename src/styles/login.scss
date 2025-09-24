@@ -13,3 +13,13 @@ main {
 .form {
     max-width: 470px;
 }
+
+@media (max-width: 720px) {
+    .page {
+        padding: 0px;
+    }
+    .form {
+        max-width: 100%;
+        padding: 20px;
+    }
+}

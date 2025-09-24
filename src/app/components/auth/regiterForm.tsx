@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import {
     Typography,
@@ -11,13 +12,40 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 
+import { validateEmail, validatePassword } from '@/lib/validateAuth';
+
 export default function RegisterForm() {
+    const [form, setForm] = useState({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
+    const [error, setError] = useState<null | string>(null);
+
+    const onSubmit = () => {
+        fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+        });
+    };
+
+    const isValid =
+        // Имя не пустое
+        form.username.trim().length > 0 &&
+        // Корректный email
+        validateEmail(form.email) &&
+        // Пароль: ≥6 символов, есть заглавная и цифра
+        validatePassword(form.password) &&
+        // Повтор пароля совпадает
+        form.password === form.confirmPassword;
+
     return (
         <Stack
             className='register-form form'
             sx={{
                 width: '100%',
-                maxWidth: 390,
                 gap: 2,
                 margin: '0 auto',
             }}
@@ -36,28 +64,40 @@ export default function RegisterForm() {
                 <OutlinedInput
                     id='email'
                     type='email'
-                    placeholder='name@company.com'
+                    placeholder='Введите вашу почту'
                     autoComplete='email'
                     required
+                    onChange={(value) =>
+                        setForm({
+                            ...form,
+                            email: value.target.value.toLocaleLowerCase(),
+                        })
+                    }
                 />
             </FormControl>
 
             <FormControl fullWidth>
                 <FormLabel htmlFor='username' sx={{ mb: 0.5 }}>
-                    Username
+                    Имя
                 </FormLabel>
                 <OutlinedInput
                     id='username'
                     type='text'
-                    placeholder='Введите имя пользователя'
+                    placeholder='Введите ваше имя'
                     autoComplete='username'
                     required
+                    onChange={(value) =>
+                        setForm({
+                            ...form,
+                            username: value.target.value.toLocaleLowerCase(),
+                        })
+                    }
                 />
             </FormControl>
 
             <FormControl fullWidth>
                 <FormLabel htmlFor='password' sx={{ mb: 0.5 }}>
-                    Password
+                    Пароль
                 </FormLabel>
                 <OutlinedInput
                     id='password'
@@ -65,6 +105,12 @@ export default function RegisterForm() {
                     placeholder='Введите пароль'
                     autoComplete='new-password'
                     required
+                    onChange={(value) =>
+                        setForm({
+                            ...form,
+                            password: value.target.value,
+                        })
+                    }
                 />
             </FormControl>
 
@@ -78,10 +124,21 @@ export default function RegisterForm() {
                     placeholder='Повторите пароль'
                     autoComplete='new-password'
                     required
+                    onChange={(value) =>
+                        setForm({
+                            ...form,
+                            confirmPassword: value.target.value,
+                        })
+                    }
                 />
             </FormControl>
 
-            <Button variant='contained' size='large'>
+            <Button
+                variant='contained'
+                size='large'
+                onClick={onSubmit}
+                disabled={!isValid}
+            >
                 Регистрация
             </Button>
 

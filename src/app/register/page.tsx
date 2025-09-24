@@ -14,9 +14,10 @@ export default function RegisterPage() {
                     container
                     spacing={2}
                     sx={{ minHeight: '100%', alignItems: 'stretch' }}
+                    justifyContent='center'
                 >
                     {/* 7/12 — форма */}
-                    <Grid size={{ md: 7, sm: 12 }}>
+                    <Grid size={{ md: 7, sm: 12, xs: 12 }}>
                         <Stack
                             justifyContent='center'
                             alignContent='center'
@@ -27,8 +28,10 @@ export default function RegisterPage() {
                     </Grid>
 
                     <Grid
-                        size={{ md: 5 }}
-                        sx={{ display: { xs: 'none', md: 'block' } }}
+                        size={{ md: 5, sm: 0 }}
+                        sx={{
+                            display: { xs: 'none', sm: 'none', md: 'block' },
+                        }}
                     >
                         <Box
                             sx={{
